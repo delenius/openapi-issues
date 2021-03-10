@@ -1,15 +1,18 @@
 # OpenAPI Generator Issue
 
-**Reserved words detection in JS client generator is case-insensitive**.
+**Python generator infinite loop on recursive types**.
 
 To reproduce:
 
 `mvn package`
 
-In the console output, observer multiple cases of this warning:
+In the console output, observe stack overflow due to infinite loop:
 
 ```
-[WARNING] InstanceOf (reserved word) cannot be used as model name. Renamed to ModelInstanceOf
+	at org.openapitools.codegen.languages.AbstractPythonCodegen.toExampleValueRecursive(AbstractPythonCodegen.java:418)
+	at org.openapitools.codegen.languages.AbstractPythonCodegen.toExampleValueRecursive(AbstractPythonCodegen.java:486)
+	at org.openapitools.codegen.languages.AbstractPythonCodegen.toExampleValueRecursive(AbstractPythonCodegen.java:352)
+	at org.openapitools.codegen.languages.AbstractPythonCodegen.toExampleValueRecursive(AbstractPythonCodegen.java:418)
 ```
 
-This should not occur, since `InstanceOf` is not a reserved word (while `instanceof` is).
+and so on...
