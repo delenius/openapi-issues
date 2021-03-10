@@ -1,0 +1,40 @@
+---
+openapi: 3.0.1
+info:
+  title: ExampleRec
+  contact:
+    name: Daniel Elenius
+    email: daniel.elenius@sri.com
+  version: 2.0.0
+tags:
+- name: ExampleRec
+paths:
+  /:
+    get:
+      tags:
+      - ExampleRec
+      operationId: getTree
+      responses:
+        "200":
+          description: "returns the tree"
+          content:
+            text/plain:
+              schema:
+                type: '#/components/schemas/TreeNode'
+components:
+  schemas:
+    TreeNode:
+      description: A node in a tree
+      required:
+      - children
+      - name
+      type: object
+      properties:
+        children:
+          description: the child nodes of this tree node
+          type: array
+          items:
+            $ref: '#/components/schemas/TreeNode'
+        name:
+          description: the name of this node
+          type: string
